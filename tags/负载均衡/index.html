@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>OAuth2.0授权码模式 - ptcx&#39;s blog</title>
+  <title>负载均衡 · ptcx&#39;s blog</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -23,8 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="ptcx" />
-  <meta name="description" content="OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。 简述 直观例子 举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步： 登录页面提示用户可以使用第三方qq登录 点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权 跳转回到我们自己的网站，后端" />
-
+  <meta name="description" content="ptcx的个人博客，记录、学习、分享" />
   <meta name="keywords" content="blog, 技术, IT, 后端技术, 前端技术, web开发, golang" />
 
 
@@ -35,8 +34,8 @@
 <meta name="generator" content="Hugo 0.59.1" />
 
 
-<link rel="canonical" href="https://ptcx.github.io/post/oauth2_code/" />
-
+<link rel="canonical" href="https://ptcx.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" />
+<link href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/index.xml" rel="alternate" type="application/rss+xml" title="ptcx&#39;s blog" />
 
 
 
@@ -61,26 +60,18 @@
 <link rel="stylesheet" href="/css/images.css">
 
 
-<meta property="og:title" content="OAuth2.0授权码模式" />
-<meta property="og:description" content="OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。 简述 直观例子 举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步： 登录页面提示用户可以使用第三方qq登录 点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权 跳转回到我们自己的网站，后端" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://ptcx.github.io/post/oauth2_code/" />
-<meta property="article:published_time" content="2019-11-12T16:22:15+08:00" />
-<meta property="article:modified_time" content="2019-11-12T16:22:15+08:00" />
-<meta itemprop="name" content="OAuth2.0授权码模式">
-<meta itemprop="description" content="OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。 简述 直观例子 举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步： 登录页面提示用户可以使用第三方qq登录 点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权 跳转回到我们自己的网站，后端">
+<meta property="og:title" content="负载均衡" />
+<meta property="og:description" content="ptcx的个人博客，记录、学习、分享" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ptcx.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" />
 
+<meta property="og:updated_time" content="2019-11-12T16:46:19+08:00" />
+<meta itemprop="name" content="负载均衡">
+<meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
-<meta itemprop="datePublished" content="2019-11-12T16:22:15&#43;08:00" />
-<meta itemprop="dateModified" content="2019-11-12T16:22:15&#43;08:00" />
-<meta itemprop="wordCount" content="876">
-
-
-
-<meta itemprop="keywords" content="安全,授权," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="OAuth2.0授权码模式"/>
-<meta name="twitter:description" content="OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。 简述 直观例子 举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步： 登录页面提示用户可以使用第三方qq登录 点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权 跳转回到我们自己的网站，后端"/>
+<meta name="twitter:title" content="负载均衡"/>
+<meta name="twitter:description" content="ptcx的个人博客，记录、学习、分享"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -279,185 +270,55 @@
     <main id="main" class="main bg-llight">
       <div class="content-wrapper">
         <div id="content" class="content container">
-          <article class="post bg-white">
-    
-    <header class="post-header">
-      <h1 class="post-title">OAuth2.0授权码模式</h1>
-      
-      <div class="post-meta">
-        <time datetime="2019-11-12" class="post-time">
-          2019-11-12
-        </time>
-        <div class="post-category">
-            <a href="https://ptcx.github.io/categories/web%E6%8A%80%E6%9C%AF/"> WEB技术 </a>
-            
-          </div>
-        
-
-        
-        
-
-        
-        
-      </div>
-    </header>
-
-    
-    
-<div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">What's On This Page</h2>
-  <div class="post-toc-content">
-    <nav id="TableOfContents">
-<ul>
-<li><a href="#简述">简述</a>
-<ul>
-<li><a href="#直观例子">直观例子</a></li>
-<li><a href="#重要名词">重要名词</a></li>
-</ul></li>
-<li><a href="#认证流程">认证流程</a></li>
-</ul>
-</nav>
-  </div>
-</div>
-
-    
-    <div class="post-content">
-      
-
-<p>OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。</p>
-
-<h1 id="简述">简述</h1>
-
-<h2 id="直观例子">直观例子</h2>
-
-<p>举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步：</p>
-
-<ol>
-<li><p>登录页面提示用户可以使用第三方qq登录</p></li>
-
-<li><p>点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权</p></li>
-
-<li><p>跳转回到我们自己的网站，后端创建新用户，并同步用户qq信息（头像、用户名等）</p></li>
-
-<li><p>用户使用这个新用户进行登录，并返回登录已成功，用户继续浏览页面</p></li>
-</ol>
-
-<p>而这里面涉及到的授权协议，就可以使用OAuth2.0来实现。</p>
-
-<h2 id="重要名词">重要名词</h2>
-
-<p>用我们的例子来说明：</p>
-
-<ul>
-<li><p>第三方应用（Third-party application）：又称客户端，我们的应用</p></li>
-
-<li><p>服务提供商（HTTP service）：qq</p></li>
-
-<li><p>资源拥有者（Resource Owner）：用户</p></li>
-
-<li><p>用户代理（User Agent）：浏览器</p></li>
-
-<li><p>认证服务器（Authorization server）：qq提供专门用于认证的服务器</p></li>
-
-<li><p>资源服务器（Resource server）：qq存放用户信息的服务器</p></li>
-</ul>
-
-<p>OAuth2.0规定在第三方应用和服务提供商之间，需要有一个授权层。第三方应用只能登录授权层，获取令牌（token），令牌有权限和有效期。服务提供商根据令牌的权限和有效期，向第三方应该提供相应的资源。</p>
-
-<p>OAuth2.0定义了四种授权方式：授权码模式、简化模式、密码模式以及客户端模式。我们主要介绍授权码模式，因为这是功能最完整、流程最严密的授权模式，使用也最广泛。</p>
-
-<h1 id="认证流程">认证流程</h1>
-
-<p>以我们的例子来说明OAuth2.0授权码模式的流程：</p>
-
-<p><img src="/image/oauth2_code_1.png#center" alt="oauth2" /></p>
-
-<p>主要分为以下几步：</p>
-
-<ol>
-<li><p>用户访问客户端，客户端将用户导向认证服务器，并附上一个重定向客户端uri</p></li>
-
-<li><p>用户在认证服务器中允许授权该客户端，认证服务器将用户导向重定向客户端uri，并附上授权码（code）</p></li>
-
-<li><p>客户端收到授权码，并附上早先的重定向uri，在服务端向认证服务器申请令牌（token）</p></li>
-
-<li><p>认证服务器核对重定向uri以及授权码，向客户端发放令牌</p></li>
-
-<li><p>客户端使用令牌请求相应的资源</p></li>
-</ol>
-
-<p>这几步中，可能还需要一些额外的参数，比如客户端id、客户端状态、权限范围等，这些跟具体的实现有关，就不再详细说明了。</p>
-
-    </div>
-
-    
-    
-
-
-    
-    
-
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="https://ptcx.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
-          <a href="https://ptcx.github.io/tags/%E6%8E%88%E6%9D%83/">授权</a>
           
-        </div>
 
-      
-      <nav class="post-nav">
-        
-          <a class="prev" href="/post/consistent_hash/">
-            
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="18" height="18">
-  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
-</svg>
-
-            </i>
-            <span class="prev-text nav-default">一致性Hash</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
-        
-          <a class="next" href="/post/tcp_status/">
-            <span class="next-text nav-default">TCP连接状态</span>
-            <span class="prev-text nav-mobile">Next</span>
-            
-            <i class="iconfont">
-              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="18" height="18">
-  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
-</svg>
-
-            </i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-
+<section id="archive" class="archive">
   
-  
-
-  
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
     
+      <div class="archive-title tag">
+        <h2 class="archive-name">Tag: 负载均衡</h2>
+      </div>
+    
+  
 
   
+    <div class="archive-post">
+      <time datetime="2019-11-12" class="archive-post-time">
+        2019-11-12
+      </time>
+      <span class="archive-post-title">
+        <a href="/post/consistent_hash/" class="archive-post-link">
+          一致性Hash
+        </a>
+      </span>
+    </div>
+  
+</section>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
 
         </div>
       </div>

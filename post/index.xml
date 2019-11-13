@@ -40,6 +40,15 @@
     </item>
     
     <item>
+      <title>一致性Hash</title>
+      <link>https://ptcx.github.io/post/consistent_hash/</link>
+      <pubDate>Tue, 12 Nov 2019 16:46:19 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/consistent_hash/</guid>
+      <description>说起一致性Hash算法，很多人的第一反应就是Memcached的路由算法。当Memcached服务分布式部署后，在一台机器上的数据缓存，在其他机器上是不存在的，我们请求缓存数据时，必须先找到拥有该数据的服务器。所以，我们需要一种路由算法来负责根据缓存数据的Key计算得到对应的Memcached服务器</description>
+    </item>
+    
+    <item>
       <title>OAuth2.0授权码模式</title>
       <link>https://ptcx.github.io/post/oauth2_code/</link>
       <pubDate>Tue, 12 Nov 2019 16:22:15 +0800</pubDate>
