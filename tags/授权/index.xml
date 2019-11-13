@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>授权 on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/%E6%8E%88%E6%9D%83/</link>
+    <description>Recent content in 授权 on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Tue, 12 Nov 2019 16:22:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/%E6%8E%88%E6%9D%83/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OAuth2.0授权码模式</title>
+      <link>https://ptcx.github.io/post/oauth2_code/</link>
+      <pubDate>Tue, 12 Nov 2019 16:22:15 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/oauth2_code/</guid>
+      <description>OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。 简述 直观例子 举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步： 登录页面提示用户可以使用第三方qq登录 点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权 跳转回到我们自己的网站，后端</description>
+    </item>
+    
+  </channel>
+</rss>

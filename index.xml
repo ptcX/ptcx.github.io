@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/</link>
+    <description>Recent content on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Wed, 13 Nov 2019 20:27:30 +0800</lastBuildDate>
+    
+        <atom:link href="https://ptcx.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Posts</title>
+      <link>https://ptcx.github.io/post/</link>
+      <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>并发 on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/%E5%B9%B6%E5%8F%91/</link>
+    <description>Recent content in 并发 on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Wed, 13 Nov 2019 20:27:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Redis网络模型(3)——客户端事件</title>
+      <link>https://ptcx.github.io/post/redis_event_3/</link>
+      <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_event_3/</guid>
+      <description>redis启动后，设置完必要的事件后，调用aeMain进入事件循环，之后便阻塞在aeApiPoll上，等待客户端的连接。 客户端交互 客户端与服务器的交互状态主要有四种：建立连接、发送请求、返回数据、关闭连接。 建立连接 如果有客户端进行连接，则会触发服务器监听socket的可读事件，并调用networki</description>
+    </item>
+    
+    <item>
+      <title>Redis网络模型(2)——Server启动</title>
+      <link>https://ptcx.github.io/post/redis_event_2/</link>
+      <pubDate>Wed, 13 Nov 2019 20:20:50 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_event_2/</guid>
+      <description>有了高性能的事件驱动库之后，就可以开始构造Redis服务器程序了。一般，Server启动都会通过以下流程，然后阻塞在accept()上，等待客户端的连接： bind() ———&amp;gt; listen() ———&amp;gt; accept() Redis也不例外，但是因为Redis是单线程，如果阻塞在accept()上，就不能对客户端进行快速的回复，所以</description>
+    </item>
+    
+    <item>
+      <title>Redis网络模型(1)——事件驱动库</title>
+      <link>https://ptcx.github.io/post/redis_event_1/</link>
+      <pubDate>Wed, 13 Nov 2019 19:49:04 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_event_1/</guid>
+      <description>Redis很快，而且，Redis能很好的应对高并发的场景。但是，如果对Redis有过了解，就会知道Redis程序是单线程的。使用单线程却能保证如此高性能，有以下几个原因： 大部分数据放在内存中，减少磁盘I/O 大多数操作都是I/O操作，cpu密集型操作异步化，防止单个操作占用大量cpu 使用I/O多路复用</description>
+    </item>
+    
+    <item>
+      <title>Goroutine调度器浅析</title>
+      <link>https://ptcx.github.io/post/go_scheduler/</link>
+      <pubDate>Fri, 08 Nov 2019 12:38:26 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/go_scheduler/</guid>
+      <description>在Go语言中，我们通过goroutine来实现并发编程，每一个并发执行的单元叫做一个goroutine。可以将goroutine类比为os线程，因为大多数情况下，这两者的表现还是比较类似的。但是相比于os线程依靠系统内核调度，goroutine是Go程序运行时自己进行调度的，而且更加轻量，调度代价更</description>
+    </item>
+    
+  </channel>
+</rss>

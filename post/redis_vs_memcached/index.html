@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Redis和Memcached，选谁？ - ptcx&#39;s blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="ptcx" />
+  <meta name="description" content="对比 Redis和Memcached都能用于数据缓存，那这两种缓存服务在实际应用中该如何选择？Redis除了有更多的数据结构，在很多方面还是和Memcached不一样。我们在选择缓存服务时，通常需要考虑以下几点： 功能 速度 内存使用 缓存持久化 集群扩展 功能对比 Memcached只支持简单的key/value" />
+
+  <meta name="keywords" content="blog, 技术, IT, 后端技术, 前端技术, web开发, golang" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="https://ptcx.github.io/post/redis_vs_memcached/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.e07deca3dddaab6fc338466ba0b2c57214644ab57eef213c3eef0c1387254220.css" integrity="sha256-4H3so93aq2/DOEZroLLFchRkSrV&#43;7yE8Pu8ME4clQiA=" media="screen" crossorigin="anonymous">
+
+
+
+
+<link rel="stylesheet" href="/css/images.css">
+
+
+<meta property="og:title" content="Redis和Memcached，选谁？" />
+<meta property="og:description" content="对比 Redis和Memcached都能用于数据缓存，那这两种缓存服务在实际应用中该如何选择？Redis除了有更多的数据结构，在很多方面还是和Memcached不一样。我们在选择缓存服务时，通常需要考虑以下几点： 功能 速度 内存使用 缓存持久化 集群扩展 功能对比 Memcached只支持简单的key/value" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ptcx.github.io/post/redis_vs_memcached/" />
+<meta property="article:published_time" content="2019-11-07T19:38:30+08:00" />
+<meta property="article:modified_time" content="2019-11-07T19:38:30+08:00" />
+<meta itemprop="name" content="Redis和Memcached，选谁？">
+<meta itemprop="description" content="对比 Redis和Memcached都能用于数据缓存，那这两种缓存服务在实际应用中该如何选择？Redis除了有更多的数据结构，在很多方面还是和Memcached不一样。我们在选择缓存服务时，通常需要考虑以下几点： 功能 速度 内存使用 缓存持久化 集群扩展 功能对比 Memcached只支持简单的key/value">
+
+
+<meta itemprop="datePublished" content="2019-11-07T19:38:30&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-07T19:38:30&#43;08:00" />
+<meta itemprop="wordCount" content="2934">
+
+
+
+<meta itemprop="keywords" content="redis,memcached," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis和Memcached，选谁？"/>
+<meta name="twitter:description" content="对比 Redis和Memcached都能用于数据缓存，那这两种缓存服务在实际应用中该如何选择？Redis除了有更多的数据结构，在很多方面还是和Memcached不一样。我们在选择缓存服务时，通常需要考虑以下几点： 功能 速度 内存使用 缓存持久化 集群扩展 功能对比 Memcached只支持简单的key/value"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ptcx's blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/post/">Archives</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      ptcx's blog
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Redis和Memcached，选谁？</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-11-07" class="post-time">
+          2019-11-07
+        </time>
+        <div class="post-category">
+            <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">What's On This Page</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#对比">对比</a>
+<ul>
+<li><a href="#功能对比">功能对比</a></li>
+<li><a href="#速度对比">速度对比</a></li>
+<li><a href="#内存使用对比">内存使用对比</a></li>
+<li><a href="#缓存持久化对比">缓存持久化对比</a></li>
+<li><a href="#集群扩展对比">集群扩展对比</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="对比">对比</h1>
+
+<p>Redis和Memcached都能用于数据缓存，那这两种缓存服务在实际应用中该如何选择？Redis除了有更多的数据结构，在很多方面还是和Memcached不一样。我们在选择缓存服务时，通常需要考虑以下几点：</p>
+
+<ul>
+<li>功能</li>
+<li>速度</li>
+<li>内存使用</li>
+<li>缓存持久化</li>
+<li>集群扩展</li>
+</ul>
+
+<h2 id="功能对比">功能对比</h2>
+
+<p>Memcached只支持简单的key/value存储，并且存储的value只能是字符串，如果是整数形式字符串，还能对其进行简单的加减操作。</p>
+
+<p>对于Redis，不仅在功能上能完全替代Memcached，还支持多种数据结构的存储：</p>
+
+<ul>
+<li>
+<a target="_blank" href="https://redis.io/commands#string">字符串</a>
+</li>
+<li>
+<a target="_blank" href="https://redis.io/commands#hash">Hash表</a>
+</li>
+<li>
+<a target="_blank" href="https://redis.io/commands#list">列表</a>
+</li>
+<li>
+<a target="_blank" href="https://redis.io/commands#set">集合</a>
+</li>
+<li>
+<a target="_blank" href="https://redis.io/commands#sorted_set">有序集合</a>
+</li>
+<li>
+<a target="_blank" href="https://redis.io/commands#geo">GEO地理位置</a>
+</li>
+<li>
+<a target="_blank" href="https://redis.io/commands#hyperloglog">HyperLogLog</a>
+</li>
+</ul>
+
+<p>除了支持更多的数据结构，Redis还提供了多种特性，比如发布订阅、事务、持久化、内置Lua解释器等。</p>
+
+<p>在功能上，Redis要比Memcached丰富的多，同时
+<a target="_blank" href="https://redis.io/documentation">Redis文档</a>
+也比
+<a target="_blank" href="https://github.com/memcached/memcached/wiki">Memcached文档</a>
+更加完善。</p>
+
+<h2 id="速度对比">速度对比</h2>
+
+<p>因为都是数据都放在内存中，所以Redis和Memcached的读写速度都非常快。网络上有各种各样的benchmark，但是由于测试机器、版本、数据等等因数影响，测试结果不尽相同，但是性能差别极其微小。Redis和Memcached的性能差别可能是由于采用不同的I/O模型设计所导致的：</p>
+
+<ul>
+<li><p>Memcached</p>
+
+<p>Memcached采用的是多线程，基于libevent实现事件驱动，使用one loop per thread模型，监听线程将接收到的请求分发给各个worker线程处理。多线程模型能够充分的利用多核，但是同时引入了线程同步、锁等性能损耗。</p></li>
+
+<li><p>Redis</p>
+
+<p>Redis使用的是单线程IO复用模型，采用事件驱动方式处理请求。因为单线程，所以一个Redis进程并不能利用多核，但是可以通过启动多个Redis实例来利用多核。对于单纯的IO操作，处理速度非常快，但是一旦进行CPU计算（排序、聚合等），可能会影响吞吐量，因为CPU计算时，并不能进行事件IO调度。</p></li>
+</ul>
+
+<p>一般来说，两者都足够快，性能瓶颈往往在于网络传输以及带宽限制。</p>
+
+<h2 id="内存使用对比">内存使用对比</h2>
+
+<p>因为频繁调用原始的malloc/free很容易造成内存碎片导致无法重新利用，而且不匹配的malloc/free容易造成内存泄露。所以为了提高内存使用效率，Memcached和Redis都实现了自己的一套内存管理方案。</p>
+
+<ul>
+<li><p>Memcached</p>
+
+<p>Memcached使用Slab Allocation机制来管理内存。关于Slab Allocation机制，有很多文章已经介绍的很清楚了，其主要思想就是：预先将申请的内存空间划分为一系列的Slab，每个Slab只负责一定范围大小数据的存储。如果需要申请内存，那么每次申请的大小为一个Page，申请后会将这个Page切分成多个Chunk，实际数据存储在Chunk中。这样不会造成内存碎片，但是数据大小比Chunk小时，会造成空间浪费。</p>
+
+<p>Memcached使用惰性过期策略，并不会到期就立即清理过期数据，而是当访问该数据时进行检查。或者当内存分配失败后，使用LRU算法来淘汰数据。内存一旦分配，Memcached便不会对其进行回收，而是在同一个Slab中重复利用。因为Memcached不回收内存，所以即使所有数据都过期，对Memcached进行Flush操作，其占用的系统内存并不会减少。</p></li>
+
+<li><p>Redis</p>
+
+<p>Redis使用jemalloc来进行内存分配，在减小内存碎片方面要比malloc/free做的更好。相比于Memcached，Redis的内存管理要简单得多，在需要时Redis就会申请内存，数据被清理时就会释放，所以在一定程度上会存在内存碎片。好处是清理后的内存会返还给操作系统，不会出现Memcached那种内存只增不减的情况。</p>
+
+<p>当开启了Redis的虚拟内存(vm)后，如果物理内存使用量超过了最大限制，将引起swap操作，把一定的数据交换到磁盘上，当需要这些数据的时候，再从磁盘中取出放入内存里。内存中始终会保存所有的key信息，swap时会计算出哪些key对应的value需要进行交换。这个特性使得Redis可以保存超过机器内存大小的数据，但同时频繁的swap以及从磁盘读取会对其性能造成影响。</p></li>
+</ul>
+
+<p>因为内存管理的实现不同，在内存使用上，Memcached和Redis可以说是各有优劣。最直观的特点就是，操作系统分配给Memcached的内存不会被释放，Memcached会一直重复利用这些内存，而Redis则会随着数据的失效将内存返还给操作系统。但是随着内存分配次数越来越多，Redis会造成内存碎片，使得物理内存占用一直增大，这时可能需要重启Redis来进行内存的重新分配。</p>
+
+<h2 id="缓存持久化对比">缓存持久化对比</h2>
+
+<p>一旦重启缓存服务，Redis默认优先通过AOF重放来恢复缓存，仅仅会丢失很小一部分数据。而Memcached中的数据完全丢失，无法恢复。所以在缓存持久化方面，Redis完胜Memcached。Redis提供了两种持久化方式，RDB和AOF，可以根据业务需要来选择，也可以同时开启。而Memcached则没有原生支持持久化，而是需要依赖一些第三方的工具实现。</p>
+
+<h2 id="集群扩展对比">集群扩展对比</h2>
+
+<p>Memcached和Redis都能以分布式集群的形式扩展存储能力，但是在实现上有很大的不同。</p>
+
+<ul>
+<li><p>Memcached</p>
+
+<p>Memcached服务节点之间不支持相互通信，所以对于Memcached服务器来说，不支持数据共享机制。Memcached的分布式集群只能由客户端实现的，在获取数据前，客户端使用一定的路由算法（通常是一致性哈希算法）计算出数据所在的存储节点，然后向该节点发送相应的操作请求。</p>
+
+<p><img src="/image/redis_vs_memcached_1.png#center" alt="memcached集群" /></p></li>
+
+<li><p>Redis</p>
+
+<p>Redis服务器之间利用分片和主从机制来构造分布式集群。一个Redis集群正常工作至少需要三个主节点，主节点相互通信，确定各自负责的数据分片。主节点各自拥有冗余的从节点，从节点会复制对应主节点的数据，当主节点不可用时，就会在相应从节点中提升一个成为主节点，保证单点故障时整个集群的可用性。</p>
+
+<p>为了保证主节点的响应性能，Redis集群不保证数据的强一致性：执行写命令后，主节点立即返回，数据复制到从节点的操作是异步的，此时如果获取该数据，就可能出现取不到的情况。</p>
+
+<p><img src="/image/redis_vs_memcached_2.png#center" alt="redis集群" /></p></li>
+</ul>
+
+<p>扩容简单、易部署是Memcached集群的特点。因为Memcached服务器之间不会互相通信，所以Memcached集群可以做到几乎无限制的线性伸缩，利用多台低配机器也能达到很好的性能效果。利用客户端实现的一致性hash路由算法以及引入虚拟节点，增减服务器也不会对当前缓存命中率有较大的影响。但是一旦出现单点故障，因为没有备份机制，缓存的读写都会出现问题，压力转移到数据库，引起性能甚至更严重的问题。</p>
+
+<p>Redis集群在扩容、部署方面相比于Memcached就复杂了许多。Redis集群增减主节点都会引起数据的重新分片，如果此时集群正在服务，可能会带来性能上的开销。但是因为主从机制，以及从节点提升容灾，遇到单点故障时也能保证服务的可用性。</p>
+
+<h1 id="总结">总结</h1>
+
+<p>总结来看，Memcached对比Redis并没有什么特别的优势，而且Redis还提供了更多的特性，以及更高的可用性和容灾策略，一般来说，选择Redis往往是没错的。但是工具的选择依赖于业务，如果在内存使用率、集群扩容等方面有着特殊的要求，Memcached可能要比Redis适合。</p>
+
+<h1 id="参考">参考</h1>
+
+<ul>
+<li>
+<a target="_blank" href="https://stackoverflow.com/questions/10558465/memcached-vs-redis?">stackoverflow: Memcached vs. Redis?</a>
+</li>
+<li>
+<a target="_blank" href="https://blog.csdn.net/tonysz126/article/details/8280696/">Redis与Memcached的区别</a>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://ptcx.github.io/tags/redis/">redis</a>
+          <a href="https://ptcx.github.io/tags/memcached/">memcached</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/go_scheduler/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Goroutine调度器浅析</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:pengtianchen1031@gmail.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/ptcx" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://ptcx.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io" target="_blank">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme based on <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane" target="_blank">Jane</a>
+  </span>
+
+  <span class="copyright-year"><span class="author">
+        ptcx
+        
+      </span>
+    &copy;2019
+  </span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.a049476013b64b1f7d2caf3f1a55fba1eac8ee987f35866e4f50e5dfaaa5bb10.js" integrity="sha256-oElHYBO2Sx99LK8/GlX7oerI7ph/NYZuT1Dl36qluxA=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

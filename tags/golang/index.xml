@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/golang/</link>
+    <description>Recent content in golang on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Fri, 08 Nov 2019 12:38:26 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Goroutine调度器浅析</title>
+      <link>https://ptcx.github.io/post/go_scheduler/</link>
+      <pubDate>Fri, 08 Nov 2019 12:38:26 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/go_scheduler/</guid>
+      <description>在Go语言中，我们通过goroutine来实现并发编程，每一个并发执行的单元叫做一个goroutine。可以将goroutine类比为os线程，因为大多数情况下，这两者的表现还是比较类似的。但是相比于os线程依靠系统内核调度，goroutine是Go程序运行时自己进行调度的，而且更加轻量，调度代价更</description>
+    </item>
+    
+  </channel>
+</rss>

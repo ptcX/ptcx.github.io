@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/post/</link>
+    <description>Recent content in Posts on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Wed, 13 Nov 2019 20:27:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Redis网络模型(3)——客户端事件</title>
+      <link>https://ptcx.github.io/post/redis_event_3/</link>
+      <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_event_3/</guid>
+      <description>redis启动后，设置完必要的事件后，调用aeMain进入事件循环，之后便阻塞在aeApiPoll上，等待客户端的连接。 客户端交互 客户端与服务器的交互状态主要有四种：建立连接、发送请求、返回数据、关闭连接。 建立连接 如果有客户端进行连接，则会触发服务器监听socket的可读事件，并调用networki</description>
+    </item>
+    
+    <item>
+      <title>Redis网络模型(2)——Server启动</title>
+      <link>https://ptcx.github.io/post/redis_event_2/</link>
+      <pubDate>Wed, 13 Nov 2019 20:20:50 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_event_2/</guid>
+      <description>有了高性能的事件驱动库之后，就可以开始构造Redis服务器程序了。一般，Server启动都会通过以下流程，然后阻塞在accept()上，等待客户端的连接： bind() ———&amp;gt; listen() ———&amp;gt; accept() Redis也不例外，但是因为Redis是单线程，如果阻塞在accept()上，就不能对客户端进行快速的回复，所以</description>
+    </item>
+    
+    <item>
+      <title>Redis网络模型(1)——事件驱动库</title>
+      <link>https://ptcx.github.io/post/redis_event_1/</link>
+      <pubDate>Wed, 13 Nov 2019 19:49:04 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_event_1/</guid>
+      <description>Redis很快，而且，Redis能很好的应对高并发的场景。但是，如果对Redis有过了解，就会知道Redis程序是单线程的。使用单线程却能保证如此高性能，有以下几个原因： 大部分数据放在内存中，减少磁盘I/O 大多数操作都是I/O操作，cpu密集型操作异步化，防止单个操作占用大量cpu 使用I/O多路复用</description>
+    </item>
+    
+    <item>
+      <title>OAuth2.0授权码模式</title>
+      <link>https://ptcx.github.io/post/oauth2_code/</link>
+      <pubDate>Tue, 12 Nov 2019 16:22:15 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/oauth2_code/</guid>
+      <description>OAuth简单来说就是一种授权标准，目前版本为2.0，但是不向后兼容。 简述 直观例子 举个例子，我们现在需要优化登录流程，支持qq用户授权登录。为了实现这个功能，一般有这么几步： 登录页面提示用户可以使用第三方qq登录 点击qq登录，跳转到qq登录页面输入用户名密码，用户点击授权 跳转回到我们自己的网站，后端</description>
+    </item>
+    
+    <item>
+      <title>TCP连接状态</title>
+      <link>https://ptcx.github.io/post/tcp_status/</link>
+      <pubDate>Mon, 11 Nov 2019 15:54:07 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/tcp_status/</guid>
+      <description>TCP协议是传输层协议，是一个面向连接的协议，为用户提供可靠的全双工字节流。 TCP连接与断开 三次握手 建立一个TCP连接需要进行三次握手： 三次握手是必要的。如果只靠前两步就建立连接，考虑这样一个场景： 客户端向服务器发送第一个分节请求SYN j1建立连接，但是这个分节由于网络阻塞，很久都没有到达服务器 客户</description>
+    </item>
+    
+    <item>
+      <title>HTTPS原理</title>
+      <link>https://ptcx.github.io/post/https_what/</link>
+      <pubDate>Mon, 11 Nov 2019 14:51:22 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/https_what/</guid>
+      <description>HTTPS，即HTTP over SSL/TLS，在HTTP下加入了一层SSL安全认证，比HTTP协议更安全。使用HTTPS需要到CA机构申请数字证书，客户端和服务端进行加密传输。我们先了解一下加密方式、数字签名、数字证书等知识，然后再看https是如何组合这些技术的。 数字签名和数字证书 需要理解数字签名和数字</description>
+    </item>
+    
+    <item>
+      <title>常用GIT命令</title>
+      <link>https://ptcx.github.io/post/git_cmd/</link>
+      <pubDate>Sun, 10 Nov 2019 11:42:42 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/git_cmd/</guid>
+      <description>远程仓库 1 2 3 4 5 6 7 8 9 # 从远程库拉取 git clone remotepath # 添加远程库 git init # 可选，初始化一个新git仓库 git remote add origin remotepath # 查看远程库信息 git remote -v 工作区与暂存区 工作区有一个隐藏目录.git，是git的版本库。版本库中存储了一个称为stage的暂存区，还有分支信息（图片取自 廖雪峰git教程 ）: 一个新文件，通过git add后</description>
+    </item>
+    
+    <item>
+      <title>缓存实现分布式锁</title>
+      <link>https://ptcx.github.io/post/cache_lock/</link>
+      <pubDate>Sat, 09 Nov 2019 12:36:50 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/cache_lock/</guid>
+      <description>web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源</description>
+    </item>
+    
+    <item>
+      <title>Goroutine调度器浅析</title>
+      <link>https://ptcx.github.io/post/go_scheduler/</link>
+      <pubDate>Fri, 08 Nov 2019 12:38:26 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/go_scheduler/</guid>
+      <description>在Go语言中，我们通过goroutine来实现并发编程，每一个并发执行的单元叫做一个goroutine。可以将goroutine类比为os线程，因为大多数情况下，这两者的表现还是比较类似的。但是相比于os线程依靠系统内核调度，goroutine是Go程序运行时自己进行调度的，而且更加轻量，调度代价更</description>
+    </item>
+    
+    <item>
+      <title>Redis和Memcached，选谁？</title>
+      <link>https://ptcx.github.io/post/redis_vs_memcached/</link>
+      <pubDate>Thu, 07 Nov 2019 19:38:30 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/redis_vs_memcached/</guid>
+      <description>对比 Redis和Memcached都能用于数据缓存，那这两种缓存服务在实际应用中该如何选择？Redis除了有更多的数据结构，在很多方面还是和Memcached不一样。我们在选择缓存服务时，通常需要考虑以下几点： 功能 速度 内存使用 缓存持久化 集群扩展 功能对比 Memcached只支持简单的key/value</description>
+    </item>
+    
+  </channel>
+</rss>

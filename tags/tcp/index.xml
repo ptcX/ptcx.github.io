@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tcp on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/tcp/</link>
+    <description>Recent content in tcp on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Mon, 11 Nov 2019 15:54:07 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TCP连接状态</title>
+      <link>https://ptcx.github.io/post/tcp_status/</link>
+      <pubDate>Mon, 11 Nov 2019 15:54:07 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/tcp_status/</guid>
+      <description>TCP协议是传输层协议，是一个面向连接的协议，为用户提供可靠的全双工字节流。 TCP连接与断开 三次握手 建立一个TCP连接需要进行三次握手： 三次握手是必要的。如果只靠前两步就建立连接，考虑这样一个场景： 客户端向服务器发送第一个分节请求SYN j1建立连接，但是这个分节由于网络阻塞，很久都没有到达服务器 客户</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>缓存实现分布式锁 - ptcx&#39;s blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="ptcx" />
+  <meta name="description" content="web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源" />
+
+  <meta name="keywords" content="blog, 技术, IT, 后端技术, 前端技术, web开发, golang" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="https://ptcx.github.io/post/cache_lock/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.e07deca3dddaab6fc338466ba0b2c57214644ab57eef213c3eef0c1387254220.css" integrity="sha256-4H3so93aq2/DOEZroLLFchRkSrV&#43;7yE8Pu8ME4clQiA=" media="screen" crossorigin="anonymous">
+
+
+
+
+<link rel="stylesheet" href="/css/images.css">
+
+
+<meta property="og:title" content="缓存实现分布式锁" />
+<meta property="og:description" content="web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ptcx.github.io/post/cache_lock/" />
+<meta property="article:published_time" content="2019-11-09T12:36:50+08:00" />
+<meta property="article:modified_time" content="2019-11-09T12:36:50+08:00" />
+<meta itemprop="name" content="缓存实现分布式锁">
+<meta itemprop="description" content="web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源">
+
+
+<meta itemprop="datePublished" content="2019-11-09T12:36:50&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-09T12:36:50&#43;08:00" />
+<meta itemprop="wordCount" content="2012">
+
+
+
+<meta itemprop="keywords" content="redis,memcached,锁," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="缓存实现分布式锁"/>
+<meta name="twitter:description" content="web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ptcx's blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/post/">Archives</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      ptcx's blog
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://ptcx.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">缓存实现分布式锁</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-11-09" class="post-time">
+          2019-11-09
+        </time>
+        <div class="post-category">
+            <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">What's On This Page</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#memcached">Memcached</a></li>
+<li><a href="#redis">Redis</a>
+<ul>
+<li><a href="#单点redis">单点Redis</a></li>
+<li><a href="#集群redis">集群Redis</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源。</p>
+
+<p>一般我们使用Redis或者Memcached来作为缓存服务，下面分析一下缓存的分布式锁实现。</p>
+
+<h1 id="memcached">Memcached</h1>
+
+<p>一般网上搜索，大多数使用Memcached来实现分布式锁的一般方法就是：</p>
+
+<ol>
+<li><p>使用add命令加锁，同时设置超时时间，只有当key不存在时才会进行添加。因为memcached的命令是原子性的，所以只有一个客户端的add命令会执行成功，也就表示获取了锁。</p></li>
+
+<li><p>解锁操作就是直接删除这个key。可以在解锁前判断当前是否已经超时，如果超时则不删除。</p></li>
+</ol>
+
+<p>但是这种实现方式是有问题的。在第2步，可能会遇到超时的临界条件。解锁前判断没有超时，发送了删除请求，但是删除请求到达memcached服务器的时候key超时了，这时就可能将其他客户端刚刚获取到的锁给误删。</p>
+
+<p>而且，Memcached实现分布式锁还有一些缺点:</p>
+
+<ul>
+<li><p>Memcached集群的分布式实现是依靠客户端的一致性hash，如果此时增加或删除机器，就有可能key对应的机器发生变化，导致锁丢失。</p></li>
+
+<li><p>Memcached采用LRU置换淘汰算法，内存不够后，可能将锁给丢弃。</p></li>
+
+<li><p>Memcached无法持久化，重启后锁会丢失。</p></li>
+</ul>
+
+<p>所以，使用Memcached实现分布式锁是不可靠的，在高并发场景下不建议使用。</p>
+
+<h1 id="redis">Redis</h1>
+
+<p>Redis根据部署情况，实现分布式锁的方法也略有不同。</p>
+
+<h2 id="单点redis">单点Redis</h2>
+
+<p>单点Redis实现分布式锁的思路和Memcached类似，也是使用一个key作为锁，只有获取锁的客户端才能创建key。但是不同的是，redis可以处理超时的临界条件。首先一个客户端通过SET命令放置一把锁：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">SET resource_name my_random_value NX PX 30000</pre></td></tr></table>
+</div>
+</div>
+<p>分析一下这个SET命令，有以下几点注意的地方：</p>
+
+<ul>
+<li>key为resource_name，即标识这把锁的名字</li>
+<li>value为my_random_value，这是一个随机值，由客户端生成，用于标识放置锁的客户端</li>
+<li>NX参数确保只有这个key不存在才能SET成功，即如果已经有锁，则创建锁就会失败</li>
+<li>PX是锁过期时间（ms），保证客户端发生崩溃后锁能自动释放</li>
+</ul>
+
+<p>解锁的操作是通过eval一段Lua脚本实现的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Lua" data-lang="Lua"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Lua" data-lang="Lua"><span class="kr">if</span> <span class="n">redis.call</span><span class="p">(</span><span class="s2">&#34;get&#34;</span><span class="p">,</span><span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="kr">then</span>
+    <span class="kr">return</span> <span class="n">redis.call</span><span class="p">(</span><span class="s2">&#34;del&#34;</span><span class="p">,</span><span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="kr">else</span>
+    <span class="kr">return</span> <span class="mi">0</span>
+<span class="kr">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>使用Lua脚本的原因是要保证get和del操作是原子性的，这样就不会被其他客户端的释放锁请求插入打断，造成竞争。Lua脚本中的ARGV[1]参数是当时设置锁的my_random_value，要和Redis中存储的值一致，这样就能保证删除锁的客户端就是当时加锁的客户端，否则可能出现其他客户端误删锁的情况。</p>
+
+<p>在单点Redis上实现分布式锁是可行的，通过上面的加锁和解锁操作能保证同一时间只有一个客户端获取锁。但是要保证系统的可用性，是不能有单点存在的。而对于集群Redis，分布式锁的实现就变复杂了。</p>
+
+<h2 id="集群redis">集群Redis</h2>
+
+<p>对于集群Redis，官方提出了一种称为
+<a target="_blank" href="https://redis.io/topics/distlock">Redlock</a>
+的分布式锁算法。与强一致性的zookeeper、etcd服务不同，Redlock分布式锁是在客户端实现的。</p>
+
+<p>在Redis集群上实现分布式锁是以单点Redis为基础的，具体到集群上的某一台Redis，加锁和解锁的操作还是一样的。假设我们有一个由5台Redis组成的集群，客户端通过以下操作获取锁：</p>
+
+<ol>
+<li><p>客户端获取当前时间t0。</p></li>
+
+<li><p>客户端使用同一个key和随机值，尝试在所有的N台Redis实例上获取锁。</p></li>
+
+<li><p>客户端获取当前时间t1，由t1-t0得到获取每个实例锁使用了多少时间。只有客户端从多数的Redis实例（N/2+1）上获取了锁，并且获取锁花费的时间小于锁过期时间，才能被认为真正获取了这把分布式锁。</p></li>
+
+<li><p>如果真正获取了分布式锁，那么锁的有效时间是锁过期时间减去获取锁花费的时间。</p></li>
+
+<li><p>如果没有获取到分布式锁，需要在所有的Redis实例上执行解锁操作，即使有部分Redis实例并没有被上锁。</p></li>
+</ol>
+
+<p>如果需要进行获取锁失败后的重试，那么重试需要等待一个随机的时间，这是为了防止所有客户端同时获取锁失败后又同时重试，导致谁都获取不了锁（脑裂）。而且为了防止出现脑裂，客户端获取锁的时间越快越好，所以最好的方式是并发的去请求所有的Redis实例获取单个实例锁。获取锁失败后，也需要尽快的释放锁住的Redis实例。</p>
+
+<p>Redis作者证明了Redlock的安全性，在工程运用上，Redlock应该是没有问题的。但是因为Redis是一个内存服务，还存在主从同步等数据一致性的问题，所以比起zookeeper还是稍有逊色。</p>
+
+<h1 id="总结">总结</h1>
+
+<p>如果非常关心分布式锁的安全性和可靠性，zookeeper、etcd等强一致性服务是首选。Redis资源因为获取简单，在一般情况下也可以选择。Memcached问题较多，不建议使用。</p>
+
+<h1 id="参考">参考</h1>
+
+<ul>
+<li>
+<a target="_blank" href="https://redis.io/topics/distlock">Distributed locks with Redis</a>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://ptcx.github.io/tags/redis/">redis</a>
+          <a href="https://ptcx.github.io/tags/memcached/">memcached</a>
+          <a href="https://ptcx.github.io/tags/%E9%94%81/">锁</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/git_cmd/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">常用GIT命令</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/go_scheduler/">
+            <span class="next-text nav-default">Goroutine调度器浅析</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:pengtianchen1031@gmail.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/ptcx" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://ptcx.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io" target="_blank">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme based on <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane" target="_blank">Jane</a>
+  </span>
+
+  <span class="copyright-year"><span class="author">
+        ptcx
+        
+      </span>
+    &copy;2019
+  </span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.a049476013b64b1f7d2caf3f1a55fba1eac8ee987f35866e4f50e5dfaaa5bb10.js" integrity="sha256-oElHYBO2Sx99LK8/GlX7oerI7ph/NYZuT1Dl36qluxA=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

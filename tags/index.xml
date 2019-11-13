@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/</link>
+    <description>Recent content in Tags on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Wed, 13 Nov 2019 20:27:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>redis</title>
+      <link>https://ptcx.github.io/tags/redis/</link>
+      <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>并发</title>
+      <link>https://ptcx.github.io/tags/%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/%E5%B9%B6%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>安全</title>
+      <link>https://ptcx.github.io/tags/%E5%AE%89%E5%85%A8/</link>
+      <pubDate>Tue, 12 Nov 2019 16:22:15 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/%E5%AE%89%E5%85%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>授权</title>
+      <link>https://ptcx.github.io/tags/%E6%8E%88%E6%9D%83/</link>
+      <pubDate>Tue, 12 Nov 2019 16:22:15 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/%E6%8E%88%E6%9D%83/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tcp</title>
+      <link>https://ptcx.github.io/tags/tcp/</link>
+      <pubDate>Mon, 11 Nov 2019 15:54:07 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/tcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>网络协议</title>
+      <link>https://ptcx.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</link>
+      <pubDate>Mon, 11 Nov 2019 15:54:07 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://ptcx.github.io/tags/git/</link>
+      <pubDate>Sun, 10 Nov 2019 11:42:42 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>memcached</title>
+      <link>https://ptcx.github.io/tags/memcached/</link>
+      <pubDate>Sat, 09 Nov 2019 12:36:50 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/memcached/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>锁</title>
+      <link>https://ptcx.github.io/tags/%E9%94%81/</link>
+      <pubDate>Sat, 09 Nov 2019 12:36:50 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/%E9%94%81/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://ptcx.github.io/tags/golang/</link>
+      <pubDate>Fri, 08 Nov 2019 12:38:26 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

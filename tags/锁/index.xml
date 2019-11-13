@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>锁 on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/%E9%94%81/</link>
+    <description>Recent content in 锁 on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Sat, 09 Nov 2019 12:36:50 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>缓存实现分布式锁</title>
+      <link>https://ptcx.github.io/post/cache_lock/</link>
+      <pubDate>Sat, 09 Nov 2019 12:36:50 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/cache_lock/</guid>
+      <description>web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源</description>
+    </item>
+    
+  </channel>
+</rss>
