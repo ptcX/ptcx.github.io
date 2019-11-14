@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>https://ptcx.github.io/tags/gc/</loc>
-    <lastmod>2019-11-14T17:17:57+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://ptcx.github.io/post/gc_intro/</loc>
     <lastmod>2019-11-14T17:17:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -45,6 +38,13 @@
   
   <url>
     <loc>https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2019-11-14T17:17:57+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ptcx.github.io/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</loc>
     <lastmod>2019-11-14T17:17:57+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
