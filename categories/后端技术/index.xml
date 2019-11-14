@@ -7,13 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
-    <lastBuildDate>Wed, 13 Nov 2019 20:27:30 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 14 Nov 2019 17:17:57 +0800</lastBuildDate>
     
 	<atom:link href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Redis网络模型(3)——客户端事件</title>
+      <title>GC算法-简介</title>
+      <link>https://ptcx.github.io/post/gc_intro/</link>
+      <pubDate>Thu, 14 Nov 2019 17:17:57 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/gc_intro/</guid>
+      <description>GC定义 GC是Garbage Collection的简称，也就是我们常说的垃圾回收。GC把程序已分配但是不再使用的内存空间视为垃圾。GC程序主要做两件事： 找到内存空间里的垃圾 回收这部分内存，以供程序员后续能再次使用 对于没有GC的语言，程序员就必须手动管理内存，如果忘记释放内存空间，就容易发生内存泄露，</description>
+    </item>
+    
+    <item>
+      <title>Redis网络模型(3)—客户端事件</title>
       <link>https://ptcx.github.io/post/redis_event_3/</link>
       <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
       
@@ -22,7 +31,7 @@
     </item>
     
     <item>
-      <title>Redis网络模型(2)——Server启动</title>
+      <title>Redis网络模型(2)—Server启动</title>
       <link>https://ptcx.github.io/post/redis_event_2/</link>
       <pubDate>Wed, 13 Nov 2019 20:20:50 +0800</pubDate>
       
@@ -31,7 +40,7 @@
     </item>
     
     <item>
-      <title>Redis网络模型(1)——事件驱动库</title>
+      <title>Redis网络模型(1)—事件驱动库</title>
       <link>https://ptcx.github.io/post/redis_event_1/</link>
       <pubDate>Wed, 13 Nov 2019 19:49:04 +0800</pubDate>
       

@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
-    <lastBuildDate>Wed, 13 Nov 2019 20:27:30 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 14 Nov 2019 17:17:57 +0800</lastBuildDate>
     
 	<atom:link href="https://ptcx.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GC</title>
+      <link>https://ptcx.github.io/tags/gc/</link>
+      <pubDate>Thu, 14 Nov 2019 17:17:57 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/gc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>算法</title>
+      <link>https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Thu, 14 Nov 2019 17:17:57 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>redis</title>
@@ -27,15 +45,6 @@
       <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
       
       <guid>https://ptcx.github.io/tags/%E5%B9%B6%E5%8F%91/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>算法</title>
-      <link>https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Tue, 12 Nov 2019 16:46:19 +0800</pubDate>
-      
-      <guid>https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/</guid>
       <description></description>
     </item>
     

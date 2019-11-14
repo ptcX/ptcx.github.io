@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>算法 on ptcx&#39;s blog</title>
-    <link>https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/</link>
-    <description>Recent content in 算法 on ptcx&#39;s blog</description>
+    <title>GC on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/gc/</link>
+    <description>Recent content in GC on ptcx&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
     <lastBuildDate>Thu, 14 Nov 2019 17:17:57 +0800</lastBuildDate>
     
-	<atom:link href="https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ptcx.github.io/tags/gc/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       
       <guid>https://ptcx.github.io/post/gc_intro/</guid>
       <description>GC定义 GC是Garbage Collection的简称，也就是我们常说的垃圾回收。GC把程序已分配但是不再使用的内存空间视为垃圾。GC程序主要做两件事： 找到内存空间里的垃圾 回收这部分内存，以供程序员后续能再次使用 对于没有GC的语言，程序员就必须手动管理内存，如果忘记释放内存空间，就容易发生内存泄露，</description>
-    </item>
-    
-    <item>
-      <title>一致性Hash</title>
-      <link>https://ptcx.github.io/post/consistent_hash/</link>
-      <pubDate>Tue, 12 Nov 2019 16:46:19 +0800</pubDate>
-      
-      <guid>https://ptcx.github.io/post/consistent_hash/</guid>
-      <description>说起一致性Hash算法，很多人的第一反应就是Memcached的路由算法。当Memcached服务分布式部署后，在一台机器上的数据缓存，在其他机器上是不存在的，我们请求缓存数据时，必须先找到拥有该数据的服务器。所以，我们需要一种路由算法来负责根据缓存数据的Key计算得到对应的Memcached服务器</description>
     </item>
     
   </channel>

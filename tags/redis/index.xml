@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>Redis网络模型(3)——客户端事件</title>
+      <title>Redis网络模型(3)—客户端事件</title>
       <link>https://ptcx.github.io/post/redis_event_3/</link>
       <pubDate>Wed, 13 Nov 2019 20:27:30 +0800</pubDate>
       
@@ -22,7 +22,7 @@
     </item>
     
     <item>
-      <title>Redis网络模型(2)——Server启动</title>
+      <title>Redis网络模型(2)—Server启动</title>
       <link>https://ptcx.github.io/post/redis_event_2/</link>
       <pubDate>Wed, 13 Nov 2019 20:20:50 +0800</pubDate>
       
@@ -31,7 +31,7 @@
     </item>
     
     <item>
-      <title>Redis网络模型(1)——事件驱动库</title>
+      <title>Redis网络模型(1)—事件驱动库</title>
       <link>https://ptcx.github.io/post/redis_event_1/</link>
       <pubDate>Wed, 13 Nov 2019 19:49:04 +0800</pubDate>
       
