@@ -471,10 +471,10 @@
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">func new_obj(size) {
-    chunk = pickup_chunk(size, free_list)
+    obj = pickup_chunk(size, free_list)
     if (chunk != NULL) {
-        remove_node(free_list, chunk)
-        return chunk
+        remove_node(free_list, obj)
+        return obj
     }
     allocation_fail()
 }</pre></td></tr></table>
