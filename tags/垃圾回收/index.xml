@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
-    <lastBuildDate>Thu, 14 Nov 2019 17:17:57 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 14 Nov 2019 19:51:14 +0800</lastBuildDate>
     
 	<atom:link href="https://ptcx.github.io/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GC标记-清除算法</title>
+      <link>https://ptcx.github.io/post/gc_mark_sweep/</link>
+      <pubDate>Thu, 14 Nov 2019 19:51:14 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/gc_mark_sweep/</guid>
+      <description>GC标记-清除算法是最早被发明的GC算法，跟字面意思一样，算法由两个阶段组成：标记阶段和清除阶段。标记阶段把所有活动对象都做上标记，然后再清除阶段把没有被标记的对象回收。 算法过程 可以用代码描述描述整个过程： 1 2 3 4 func mark_sweep() { mark_phase() sweep_phase() } 算法除了标记和清除过程，对于对象的分配我们也需要做相应的策略。 标记阶段 每个</description>
+    </item>
     
     <item>
       <title>GC算法简介</title>

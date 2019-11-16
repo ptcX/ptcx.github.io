@@ -65,7 +65,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ptcx.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-14T17:17:57+08:00" />
+<meta property="og:updated_time" content="2019-11-14T19:51:14+08:00" />
 <meta itemprop="name" content="ptcx&#39;s blog">
 <meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
@@ -282,6 +282,40 @@
   <header class="post-header">
     <h1 class="post-title">
       
+      <a class="post-link" href="/post/consistent_hash/">一致性Hash</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2019-11-12" class="post-time">
+        2019-11-12
+      </time>
+      <div class="post-category">
+          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
+          
+        </div>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      说起一致性Hash算法，很多人的第一反应就是Memcached的路由算法。当Memcached服务分布式部署后，在一台机器上的数据缓存，在其他机器上是不存在的，我们请求缓存数据时，必须先找到拥有该数据的服务器。所以，我们需要一种路由算法来负责根据缓存数据的Key计算得到对应的Memcached服务器
+    </div>
+    <div class="read-more">
+      <a href="/post/consistent_hash/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
       <a class="post-link" href="/post/oauth2_code/">OAuth2.0授权码模式</a>
     </h1>
     
@@ -408,40 +442,6 @@
     </div>
     <div class="read-more">
       <a href="/post/git_cmd/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/cache_lock/">缓存实现分布式锁</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2019-11-09" class="post-time">
-        2019-11-09
-      </time>
-      <div class="post-category">
-          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
-          
-        </div>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      web程序一般都分布在不同的服务器上，如果需要对外部资源进行独占操作就必须使用锁机制，这时候就需要使用分布式锁。一般来说，使用zookeeper、etcd这种强一致性的服务来实现分布式锁是最可靠的。但是有时候条件受限，仅仅为了分布式锁就引入zookeeper还是太奢侈了，反而缓存是比较容易获得的资源
-    </div>
-    <div class="read-more">
-      <a href="/post/cache_lock/" class="read-more-link">Read more</a>
     </div>
     
   </div>
