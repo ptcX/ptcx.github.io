@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GC标记-清除算法 - ptcx&#39;s blog</title>
+  <title>GC引用计数法 - ptcx&#39;s blog</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="ptcx" />
-  <meta name="description" content="GC标记-清除算法是最早被发明的GC算法，跟字面意思一样，算法由两个阶段组成：标记阶段和清除阶段。标记阶段把所有活动对象都做上标记，然后再清除阶段把没有被标记的对象回收。 算法过程 可以用代码描述描述整个过程： 1 2 3 4 func mark_sweep() { mark_phase() sweep_phase() } 算法除了标记和清除过程，对于对象的分配我们也需要做相应的策略。 标记阶段 每个" />
+  <meta name="description" content="引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。 算法过程 在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建" />
 
   <meta name="keywords" content="blog, 技术, IT, 后端技术, 前端技术, web开发, golang" />
 
@@ -35,7 +35,7 @@
 <meta name="generator" content="Hugo 0.59.1" />
 
 
-<link rel="canonical" href="https://ptcx.github.io/post/gc_mark_sweep/" />
+<link rel="canonical" href="https://ptcx.github.io/post/gc_rc/" />
 
 
 
@@ -61,26 +61,26 @@
 <link rel="stylesheet" href="/css/images.css">
 
 
-<meta property="og:title" content="GC标记-清除算法" />
-<meta property="og:description" content="GC标记-清除算法是最早被发明的GC算法，跟字面意思一样，算法由两个阶段组成：标记阶段和清除阶段。标记阶段把所有活动对象都做上标记，然后再清除阶段把没有被标记的对象回收。 算法过程 可以用代码描述描述整个过程： 1 2 3 4 func mark_sweep() { mark_phase() sweep_phase() } 算法除了标记和清除过程，对于对象的分配我们也需要做相应的策略。 标记阶段 每个" />
+<meta property="og:title" content="GC引用计数法" />
+<meta property="og:description" content="引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。 算法过程 在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ptcx.github.io/post/gc_mark_sweep/" />
-<meta property="article:published_time" content="2019-11-14T19:51:14+08:00" />
-<meta property="article:modified_time" content="2019-11-14T19:51:14+08:00" />
-<meta itemprop="name" content="GC标记-清除算法">
-<meta itemprop="description" content="GC标记-清除算法是最早被发明的GC算法，跟字面意思一样，算法由两个阶段组成：标记阶段和清除阶段。标记阶段把所有活动对象都做上标记，然后再清除阶段把没有被标记的对象回收。 算法过程 可以用代码描述描述整个过程： 1 2 3 4 func mark_sweep() { mark_phase() sweep_phase() } 算法除了标记和清除过程，对于对象的分配我们也需要做相应的策略。 标记阶段 每个">
+<meta property="og:url" content="https://ptcx.github.io/post/gc_rc/" />
+<meta property="article:published_time" content="2019-11-16T21:27:53+08:00" />
+<meta property="article:modified_time" content="2019-11-16T21:27:53+08:00" />
+<meta itemprop="name" content="GC引用计数法">
+<meta itemprop="description" content="引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。 算法过程 在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建">
 
 
-<meta itemprop="datePublished" content="2019-11-14T19:51:14&#43;08:00" />
-<meta itemprop="dateModified" content="2019-11-14T19:51:14&#43;08:00" />
-<meta itemprop="wordCount" content="1979">
+<meta itemprop="datePublished" content="2019-11-16T21:27:53&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-16T21:27:53&#43;08:00" />
+<meta itemprop="wordCount" content="1502">
 
 
 
 <meta itemprop="keywords" content="算法,垃圾回收," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="GC标记-清除算法"/>
-<meta name="twitter:description" content="GC标记-清除算法是最早被发明的GC算法，跟字面意思一样，算法由两个阶段组成：标记阶段和清除阶段。标记阶段把所有活动对象都做上标记，然后再清除阶段把没有被标记的对象回收。 算法过程 可以用代码描述描述整个过程： 1 2 3 4 func mark_sweep() { mark_phase() sweep_phase() } 算法除了标记和清除过程，对于对象的分配我们也需要做相应的策略。 标记阶段 每个"/>
+<meta name="twitter:title" content="GC引用计数法"/>
+<meta name="twitter:description" content="引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。 算法过程 在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -282,11 +282,11 @@
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">GC标记-清除算法</h1>
+      <h1 class="post-title">GC引用计数法</h1>
       
       <div class="post-meta">
-        <time datetime="2019-11-14" class="post-time">
-          2019-11-14
+        <time datetime="2019-11-16" class="post-time">
+          2019-11-16
         </time>
         <div class="post-category">
             <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
@@ -311,16 +311,15 @@
 <ul>
 <li><a href="#算法过程">算法过程</a>
 <ul>
-<li><a href="#标记阶段">标记阶段</a></li>
-<li><a href="#清除阶段">清除阶段</a></li>
-<li><a href="#对象分配">对象分配</a></li>
+<li><a href="#创建对象">创建对象</a></li>
+<li><a href="#更新指针">更新指针</a></li>
 </ul></li>
 <li><a href="#优点">优点</a></li>
 <li><a href="#缺点">缺点</a></li>
 <li><a href="#改进">改进</a>
 <ul>
-<li><a href="#bibop法">BiBOP法</a></li>
-<li><a href="#位图标记法">位图标记法</a></li>
+<li><a href="#延迟引用计数法">延迟引用计数法</a></li>
+<li><a href="#部分标记-清除算法">部分标记-清除算法</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -331,49 +330,15 @@
     <div class="post-content">
       
 
-<p>GC标记-清除算法是最早被发明的GC算法，跟字面意思一样，算法由两个阶段组成：标记阶段和清除阶段。标记阶段把所有活动对象都做上标记，然后再清除阶段把没有被标记的对象回收。</p>
+<p>引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。</p>
 
 <h1 id="算法过程">算法过程</h1>
 
-<p>可以用代码描述描述整个过程：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func mark_sweep() {
-    mark_phase()
-    sweep_phase()
-}</pre></td></tr></table>
-</div>
-</div>
-<p>算法除了标记和清除过程，对于对象的分配我们也需要做相应的策略。</p>
+<p>在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建对象时，一个是更新指针指向时。</p>
 
-<p><img src="/image/gc_mark_sweep_1.png#center" alt="初始状态" /></p>
+<h2 id="创建对象">创建对象</h2>
 
-<h2 id="标记阶段">标记阶段</h2>
-
-<p>每个对象的头中，都会有一个marked变量来表明当前对象是否已经被标记。我们遍历堆中根引用的所有对象，为堆中所有的活动对象打上标记：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func mark_phase() {
-    for (obj in roots) {
-        mark(obj)
-    }
-}</pre></td></tr></table>
-</div>
-</div>
-<p><code>mark</code>函数会递归的标记对象以及其引用的对象，这样就能把所有的活动对象都标记上：</p>
+<p>创建对象调用<code>new_obj</code>函数，和gc标记-清除算法差别不大，同样时遍历空闲链表，然后找到大小合适的分块返回，还额外的做了引用计数的操作：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt">1
@@ -387,24 +352,37 @@
 </span><span class="lnt">9
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">func mark(obj) {
-    if (obj.marked) {
-        return
+<pre class="chroma">func new_obj(size) {
+    obj = pickup_chunk(size, free_list)
+    if (chunk != NULL) {
+        remove_node(free_list, obj)
+        obj.ref_cnt = 1
+        return obj
     }
-    obj.marked = true
-    for (child in children(obj)) {
-        mark(child)
-    }
+    allocation_fail()
 }</pre></td></tr></table>
 </div>
 </div>
-<p><img src="/image/gc_mark_sweep_2.png#center" alt="标记状态" /></p>
+<h2 id="更新指针">更新指针</h2>
 
-<p>标记阶段程序会标记所有的活动对象，所以标记花费的时间是与活动对象总数成正比的。</p>
-
-<h2 id="清除阶段">清除阶段</h2>
-
-<p>清除阶段gc会遍历整个堆，回收那些没有被标记的对象，使其能够再次被利用：</p>
+<p>更新指针调用<code>update_ptr</code>函数，用于更新指针ptr，使其指向对象obj，同时进行计数器增减：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func update_ptr(ptr, obj) {
+    inc_ref_cnt(obj)
+    dec_ref_cnt(*ptr)
+    *ptr = obj
+}</pre></td></tr></table>
+</div>
+</div>
+<p>再来看一下对计数器增量和减量的操作：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt"> 1
@@ -423,163 +401,84 @@
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">func sweep_phase() {
-    free_list = NULL
-    sweeping = HEAP_START
-    while (sweeping &lt; HEAP_END) {
-        if (sweeping.marked) {
-            sweeping.marked = false
-        } else {
-            if (sweeping == free_list + free_list.size) {
-                // 临近分块合并
-                free_list.size += sweeping.size
-            } else {
-                // 串联空闲链表
-                sweeping.next = free_list
-                free_list = sweeping
-            }
+<pre class="chroma">func inc_ref_cnt(obj) {
+    if (obj == NULL) {
+        return
+    }
+    obj.ref_cnt++
+}
+
+func dec_ref_cnt(obj) {
+    obj.ref_cnt--
+    if (obj.ref_cnt == 0) {
+        for (child in children(obj)) {
+            dec_ref_cnt(child)
         }
-        sweeping += sweeping.size
+        reclaim(obj, free_list)
     }
 }</pre></td></tr></table>
 </div>
 </div>
-<p>我们引入一个空闲链表free_list，用于串联所有的非活动对象。清除阶段从堆的首地址HEAP_START开始，按顺序一个一个遍历对象，如果对象没有被标记，就把它串联到空闲链表中。对于相邻的分块，我们直接合并即可。对象头中的next指针用于串联所有的非活动对象。同时将活动对象的marked标志重置，以便下一次进行GC。</p>
+<p>减量操作后，计数器值为0的对象就变成了垃圾，相应由这个对象指向的其他对象都需要进行计数器减量的操作。之后调用<code>reclaim</code>函数将obj链接到空闲链表的中。</p>
 
-<p><img src="/image/gc_mark_sweep_3.png#center" alt="清除状态" /></p>
+<p>在实际更新指针指向之前，进行了2步内存管理的操作：</p>
 
-<p>清除阶段所花费时间与堆大小成正比。堆越大，清除阶段所花费的时间就会越长。</p>
+<ol>
+<li>对指针ptr新引用的对象（obj）计数器进行了增量操作</li>
+<li>对指针ptr之前引用的对象（*ptr）计数器进行了减量操作</li>
+</ol>
 
-<h2 id="对象分配">对象分配</h2>
+<p>先增量后减量的操作顺序是不能颠倒的，当*ptr和obj是同一个对象时，如果先进行减量操作，这时该对象计数器值可能先变为0而被错误回收，引发不可预知的bug。</p>
 
-<p>我们已经把垃圾对象连接到空闲链表，分配对象时只需要在空闲链表中遍历并寻找大小合适的分块就可以了。如果找不到合适的分块，就分配失败（当前策略），或者执行压缩堆操作。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func new_obj(size) {
-    obj = pickup_chunk(size, free_list)
-    if (chunk != NULL) {
-        remove_node(free_list, obj)
-        return obj
-    }
-    allocation_fail()
-}</pre></td></tr></table>
-</div>
-</div>
-<p>我们使用<code>pickup_chunk</code>函数遍历空闲链表free_list，寻找大于或等于size的分块，如果找到和size大小相同的分块，则直接返回该分块，否则将该分块分割，返回size大小，剩余的链接到空闲链表中：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func pickup_chunk(size, free_list) {
-    fit_chunk = free_list
-    while (fit_chunk != NULL) {
-        if (fit_chunk.size == size) {
-            break
-        }
-        if (fit_chunk.size &gt; size) {
-            resize_chunk(free_list, fit_chunk, size)
-            break
-        }
-        fit_chunk = fit_chunk.next
-    }
-    return fit_chunk
-}</pre></td></tr></table>
-</div>
-</div>
-<p>分配策略有三种：First-Fit、Best-Fit、Worst-Fit：</p>
-
-<ul>
-<li><p>First-Fit：分配空闲链表中最先发现的大于等于size大小的分块</p></li>
-
-<li><p>Best-Fit：分配空闲链表中大于等于size大小的最小分块</p></li>
-
-<li><p>Worst-Fit：分配空闲链表中最大的分块，目的是剩余的分块数量最大化。</p></li>
-</ul>
-
-<p>其中，Worst-Fit容易生成大量的小分块，不推荐使用。First-Fit需要的时间最短，Bset-Fit分配后碎片化的几率最小。</p>
+<p><img src="/image/gc_rc_1.png#center" alt="引用计数" /></p>
 
 <h1 id="优点">优点</h1>
 
-<p>GC标记-清除算法有两个优点：</p>
-
-<ul>
-<li><p>实现简单</p>
-
-<p>算法实现简单，那么与其他的算法组合也就相应的简单了。</p></li>
-
-<li><p>保守GC</p>
-
-<p>算法不会移动对象，非常适合搭配保守的GC算法。</p></li>
-</ul>
+<p>在引用计数法中，每个对象始终都知道自己的被引用数，当被引用数的值为0时，对象马上就会把自己作为空闲空间连接到空闲链表。也就是说，各个对象在变成垃圾的同时就会立刻被回收，这样就极大的缩短了程序的最大暂停时间。</p>
 
 <h1 id="缺点">缺点</h1>
 
-<p>GC标记-清除算法的缺点也很明显：</p>
+<p>引用计数法的缺点也很明显，主要有以下两点：</p>
 
 <ul>
-<li><p>碎片化</p>
+<li><p>计数器处理带来额外开销</p>
 
-<p>在GC标记-清除算法的使用过程中会逐渐产生被细化的分块，不久后就会导致无数的小分块散布在堆的各处，我们称这种状况为碎片化。如果发生碎片化，即使堆大小足够，也会因为一个个散落的分块导致分配对象失败。</p></li>
+<p>大多数情况下，指针都会频繁的更新，这时候计数器的值增减就会变得很繁重。同时，用于引用计数的值最大必须大于堆中所有对象数，以防止所有对象都指向一个对象的情况，这样对于一个只有很少字段的对象来说，计数器字段就可能占了一半的空间。</p></li>
 
-<li><p>分配速度</p>
+<li><p>无法处理循环引用</p>
 
-<p>分配对象时，每次都需要遍历空闲链表，找到足够大的分块，最坏情况是每次都要遍历到最后。</p></li>
+<p><img src="/image/gc_rc_2.png#center" alt="循环引用" /></p>
 
-<li><p>写时复制技术不兼容</p>
-
-<p>Linux中进程fork时，大部分内存空间都不会被复制，只有发生内存修改时才会发生复制，这个技术就是写时复制。因为GC标记-清除算法会频繁的修改对象的头信息中标志位，就会发生不必要的复制。</p></li>
+<p>如上图，当两个对象互相引用，但是有没有其他对象引用这两个对象时，就会造成引用计数器永远都是1，这两个对象就无法被回收，</p></li>
 </ul>
 
 <h1 id="改进">改进</h1>
 
-<h2 id="bibop法">BiBOP法</h2>
+<h2 id="延迟引用计数法">延迟引用计数法</h2>
 
-<p>BiBOP是Big Bag Of Pages的缩写，就是将堆分成几个块，每个块都管理只管理相同或者相近大小的对象。对应的空闲链表也有多个，每个空闲链表只链接相同大小的垃圾对象。</p>
+<p>因为引用计数法会频繁的修改计数器，可能给系统带来额外的开销，可以使用
+<a target="_blank" href="https://www.memorymanagement.org/glossary/d.html#term-deferred-reference-counting">延迟引用计数法</a>
+来延迟由根引用变化所带来的频繁的计数器修改。</p>
 
-<p><img src="/image/gc_mark_sweep_4.png#center" alt="BiBOP" /></p>
+<p>在延迟引用计数法中，引入了一个ZCT(Zero Count Table)，会事先记录下计数器在<code>def_ref_cnt()</code>函数下变为0的对象：</p>
 
-<p>因为每个块都只能分配相近大小的对象，所以就不会出现大小不均匀的分块，这样能提高堆的使用效率，但是BiBOP法也不能完全的消除碎片化，在块中还是可能会出现碎片。而且如果对象大小分布较极端，就会出现某些分块中活动对象较少，也不能有效利用堆。</p>
+<p><img src="/image/gc_rc_3.png#center" alt="延迟引用计数" /></p>
 
-<p>使用多个空闲链表能提高对象的分配速度，不用遍历所有的空闲链表，只需要在对应大小的空闲链表中遍历就可以了。</p>
+<p>计数器值为0的对象不一定是垃圾，所以先暂时保留这些对象，当整个堆空间满时，再统一对ZCT中指向的对象进行回收处理。这样就达到了延迟根引用的计数，将垃圾一并回收，减少了由根引用频繁变化带来的计数器修改。</p>
 
-<h2 id="位图标记法">位图标记法</h2>
+<p>但是因为延迟处理，失去了引用计数实时回收垃圾的优点，ZCT中的对象越多，暂停时间越长，降低了GC的吞吐量。</p>
 
-<p>在标记垃圾对象时，我们是直接标记对象的头，这样就与写时复制技术不兼容。所以在标记的时候，不在头部标记，而是在一个位图表格中进行标记，因为位图表格一般都很小，写时复制时只会复制位图表格，不会造成很大影响。</p>
+<h2 id="部分标记-清除算法">部分标记-清除算法</h2>
 
-<p>位图表格的实现方式有很多种，比如散列表、树、整形数组等。一般来说，我们为堆的每个字（对象分配的最小占用字节数）都分配一个位，如果堆有多个，那么为每一个堆都分配一个位图。</p>
+<p>引用计数法最大的缺点就是不能解决循环引用的问题，使得单纯的引用计数法不能用于实际的应用中，部分标记-清除算法就是对这个问题的改进。</p>
 
-<p><img src="/image/gc_mark_sweep_5.png#center" alt="位图标记" /></p>
+<p>部分标记-清除算法只对可能有循环引用的对象群使用标记-清除，对其他对象还继续使用引用计数法。但是与普通的标记-清除算法不同，部分标记-清除算法查找的是非活动对象，这样就可以解决循环引用无法回收的问题了。</p>
 
-<p>位图标记法除了能兼容写时复制技术，在清除阶段也有优势，可以一次性的将所有标记位清除以供下一次标记，使清除效率更高效。</p>
+<p>但是部分标记-清除算法并不是完美的，执行部分标记-清除过程需要暂停程序，这也失去了引用计数实时回收垃圾的优点。</p>
+
+<p>我会用单独的一篇文章来说明部分标记-清除算法的过程。</p>
 
     </div>
 
@@ -600,22 +499,9 @@
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/gc_rc/">
-            
-            <i class="iconfont">
-              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="18" height="18">
-  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
-</svg>
-
-            </i>
-            <span class="prev-text nav-default">GC引用计数法</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
         
-          <a class="next" href="/post/gc_intro/">
-            <span class="next-text nav-default">GC算法简介</span>
+          <a class="next" href="/post/gc_mark_sweep/">
+            <span class="next-text nav-default">GC标记-清除算法</span>
             <span class="prev-text nav-mobile">Next</span>
             
             <i class="iconfont">

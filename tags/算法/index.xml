@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
-    <lastBuildDate>Thu, 14 Nov 2019 19:51:14 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 16 Nov 2019 21:27:53 +0800</lastBuildDate>
     
 	<atom:link href="https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GC引用计数法</title>
+      <link>https://ptcx.github.io/post/gc_rc/</link>
+      <pubDate>Sat, 16 Nov 2019 21:27:53 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/gc_rc/</guid>
+      <description>引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。 算法过程 在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建</description>
+    </item>
     
     <item>
       <title>GC标记-清除算法</title>

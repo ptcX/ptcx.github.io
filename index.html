@@ -65,7 +65,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ptcx.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-14T19:51:14+08:00" />
+<meta property="og:updated_time" content="2019-11-16T21:27:53+08:00" />
 <meta itemprop="name" content="ptcx&#39;s blog">
 <meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
@@ -282,6 +282,40 @@
   <header class="post-header">
     <h1 class="post-title">
       
+      <a class="post-link" href="/post/gc_rc/">GC引用计数法</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2019-11-16" class="post-time">
+        2019-11-16
+      </time>
+      <div class="post-category">
+          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
+          
+        </div>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      引用计数法引入了计数器的概念，表示一个对象被多少个其他对象引用，这是一个无符号的整数值。 算法过程 在其他的GC算法中，当需要进行GC时会调用GC函数来清理垃圾空间。然而在引用计数法中没有明确启动GC的时刻，它在程序运行的过程中通过对象的引用计数器来进行内存管理。计数器在两种情况下会发生变化，一个是创建
+    </div>
+    <div class="read-more">
+      <a href="/post/gc_rc/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
       <a class="post-link" href="/post/gc_mark_sweep/">GC标记-清除算法</a>
     </h1>
     
@@ -408,40 +442,6 @@
     </div>
     <div class="read-more">
       <a href="/post/redis_event_2/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/redis_event_1/">Redis网络模型(1)—事件驱动库</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2019-11-13" class="post-time">
-        2019-11-13
-      </time>
-      <div class="post-category">
-          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
-          
-        </div>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      Redis很快，而且，Redis能很好的应对高并发的场景。但是，如果对Redis有过了解，就会知道Redis程序是单线程的。使用单线程却能保证如此高性能，有以下几个原因： 大部分数据放在内存中，减少磁盘I/O 大多数操作都是I/O操作，cpu密集型操作异步化，防止单个操作占用大量cpu 使用I/O多路复用
-    </div>
-    <div class="read-more">
-      <a href="/post/redis_event_1/" class="read-more-link">Read more</a>
     </div>
     
   </div>
