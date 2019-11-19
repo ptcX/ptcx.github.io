@@ -414,7 +414,7 @@ func dec_ref_cnt(obj) {
     obj.ref_cnt--
     if (obj.ref_cnt == 0) {
         for (child in children(obj)) {
-            dec_ref_cnt(child)
+            dec_ref_cnt(*child)
         }
         reclaim(obj, free_list)
     }
@@ -478,7 +478,7 @@ func dec_ref_cnt(obj) {
 
 <p>但是部分标记-清除算法并不是完美的，执行部分标记-清除过程需要暂停程序，这也失去了引用计数实时回收垃圾的优点。</p>
 
-<p>我会用单独的一篇文章来说明部分标记-清除算法的过程。</p>
+<p>下面用单独的一篇文章来说明部分标记-清除算法的过程。</p>
 
     </div>
 
