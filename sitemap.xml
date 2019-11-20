@@ -3,55 +3,62 @@
   
   <url>
     <loc>https://ptcx.github.io/categories/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://ptcx.github.io/post/gc_rc/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <loc>https://ptcx.github.io/post/gc_partial/</loc>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ptcx.github.io/post/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ptcx.github.io/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ptcx.github.io/tags/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ptcx.github.io/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</loc>
-    <lastmod>2019-11-16T21:27:53+08:00</lastmod>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ptcx.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2019-11-18T11:26:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ptcx.github.io/post/gc_rc/</loc>
     <lastmod>2019-11-16T21:27:53+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

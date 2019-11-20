@@ -65,7 +65,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ptcx.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-16T21:27:53+08:00" />
+<meta property="og:updated_time" content="2019-11-18T11:26:39+08:00" />
 <meta itemprop="name" content="ptcx&#39;s blog">
 <meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
@@ -282,6 +282,40 @@
   <header class="post-header">
     <h1 class="post-title">
       
+      <a class="post-link" href="/post/gc_partial/">GC部分标记-清除法</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2019-11-18" class="post-time">
+        2019-11-18
+      </time>
+      <div class="post-category">
+          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
+          
+        </div>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      部分标记-清除算法只对可能有循环引用的对象群使用标记-清除，对其他对象还继续使用引用计数法。但是与普通的标记-清除算法不同，部分标记-清除算法查找的是非活动对象，这样就可以解决循环引用无法回收的问题了。 算法术语 在部分标记-清除算法中，对象会被涂成4中不同的颜色来进行管理： 黑色：black，绝对不是垃
+    </div>
+    <div class="read-more">
+      <a href="/post/gc_partial/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
       <a class="post-link" href="/post/gc_rc/">GC引用计数法</a>
     </h1>
     
@@ -408,40 +442,6 @@
     </div>
     <div class="read-more">
       <a href="/post/redis_event_3/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/redis_event_2/">Redis网络模型(2)—Server启动</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2019-11-13" class="post-time">
-        2019-11-13
-      </time>
-      <div class="post-category">
-          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
-          
-        </div>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      有了高性能的事件驱动库之后，就可以开始构造Redis服务器程序了。一般，Server启动都会通过以下流程，然后阻塞在accept()上，等待客户端的连接： bind() ———&gt; listen() ———&gt; accept() Redis也不例外，但是因为Redis是单线程，如果阻塞在accept()上，就不能对客户端进行快速的回复，所以
-    </div>
-    <div class="read-more">
-      <a href="/post/redis_event_2/" class="read-more-link">Read more</a>
     </div>
     
   </div>

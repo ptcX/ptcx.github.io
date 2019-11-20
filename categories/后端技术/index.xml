@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
-    <lastBuildDate>Sat, 16 Nov 2019 21:27:53 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2019 11:26:39 +0800</lastBuildDate>
     
 	<atom:link href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GC部分标记-清除法</title>
+      <link>https://ptcx.github.io/post/gc_partial/</link>
+      <pubDate>Mon, 18 Nov 2019 11:26:39 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/gc_partial/</guid>
+      <description>部分标记-清除算法只对可能有循环引用的对象群使用标记-清除，对其他对象还继续使用引用计数法。但是与普通的标记-清除算法不同，部分标记-清除算法查找的是非活动对象，这样就可以解决循环引用无法回收的问题了。 算法术语 在部分标记-清除算法中，对象会被涂成4中不同的颜色来进行管理： 黑色：black，绝对不是垃</description>
+    </item>
     
     <item>
       <title>GC引用计数法</title>
