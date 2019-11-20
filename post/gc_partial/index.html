@@ -73,7 +73,7 @@
 
 <meta itemprop="datePublished" content="2019-11-18T11:26:39&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-18T11:26:39&#43;08:00" />
-<meta itemprop="wordCount" content="1710">
+<meta itemprop="wordCount" content="1712">
 
 
 
@@ -322,7 +322,7 @@
 </ul></li>
 </ul></li>
 <li><a href="#不足">不足</a></li>
-<li><a href="#运用">运用</a></li>
+<li><a href="#实际运用">实际运用</a></li>
 </ul>
 </nav>
   </div>
@@ -607,7 +607,7 @@
 
 <p>部分标记-清除算法虽然能完美的解决循环引用问题，但是需要遍历的从阴影队列搜索对象，被队列记录的对象不全都是垃圾对象，，所以要搜索的对象绝对不在少数。这个算法总计需要查找3次对象，也就是说需要对从队列取出的阴影对象分别执行1次<code>mark_gray</code>函数、<code>scan_gray</code>函数以及<code>collect_white</code>函数，大大增加了内存管理所花费的时间。</p>
 
-<h1 id="运用">运用</h1>
+<h1 id="实际运用">实际运用</h1>
 
 <p>虽然增加了gc的暂停时间，但是部分标记-清除算法使得引用计数法可以真正的使用在实际环境中。比如
 <a target="_blank" href="https://www.php.net/manual/en/features.gc.collecting-cycles.php">PHP的GC算法</a>
