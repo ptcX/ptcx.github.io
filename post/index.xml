@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>ptcx</copyright>
-    <lastBuildDate>Mon, 18 Nov 2019 11:26:39 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 20 Nov 2019 19:40:22 +0800</lastBuildDate>
     
 	<atom:link href="https://ptcx.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GC复制算法</title>
+      <link>https://ptcx.github.io/post/gc_copying/</link>
+      <pubDate>Wed, 20 Nov 2019 19:40:22 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/gc_copying/</guid>
+      <description>GC复制算法是一个非常大胆的GC算法，简单来说，就是把某个内存空间中的活动对象复制到另一个内存空间中，然后把原空间的所有对象都回收掉。 算法过程 首先我们把堆分为两个空间From和To，当From空间完全占满时，GC将活动对象全部复制到To空间，复制完成后互换两个空间。From空间和To空间大小必须一致</description>
+    </item>
     
     <item>
       <title>GC部分标记-清除法</title>

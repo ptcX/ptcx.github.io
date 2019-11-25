@@ -65,7 +65,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ptcx.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-18T11:26:39+08:00" />
+<meta property="og:updated_time" content="2019-11-20T19:40:22+08:00" />
 <meta itemprop="name" content="ptcx&#39;s blog">
 <meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
@@ -282,6 +282,40 @@
   <header class="post-header">
     <h1 class="post-title">
       
+      <a class="post-link" href="/post/gc_copying/">GC复制算法</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2019-11-20" class="post-time">
+        2019-11-20
+      </time>
+      <div class="post-category">
+          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
+          
+        </div>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      GC复制算法是一个非常大胆的GC算法，简单来说，就是把某个内存空间中的活动对象复制到另一个内存空间中，然后把原空间的所有对象都回收掉。 算法过程 首先我们把堆分为两个空间From和To，当From空间完全占满时，GC将活动对象全部复制到To空间，复制完成后互换两个空间。From空间和To空间大小必须一致
+    </div>
+    <div class="read-more">
+      <a href="/post/gc_copying/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
       <a class="post-link" href="/post/gc_partial/">GC部分标记-清除法</a>
     </h1>
     
@@ -414,40 +448,6 @@
 </article>
 
   
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/redis_event_3/">Redis网络模型(3)—客户端事件</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2019-11-13" class="post-time">
-        2019-11-13
-      </time>
-      <div class="post-category">
-          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
-          
-        </div>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      redis启动后，设置完必要的事件后，调用aeMain进入事件循环，之后便阻塞在aeApiPoll上，等待客户端的连接。 客户端交互 客户端与服务器的交互状态主要有四种：建立连接、发送请求、返回数据、关闭连接。 建立连接 如果有客户端进行连接，则会触发服务器监听socket的可读事件，并调用networki
-    </div>
-    <div class="read-more">
-      <a href="/post/redis_event_3/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-  
 </section>
 
 
@@ -483,6 +483,10 @@
       
       <li >
         <a href="/page/3/">3</a>
+      </li>
+      
+      <li >
+        <a href="/page/4/">4</a>
       </li>
       
     </ul>
