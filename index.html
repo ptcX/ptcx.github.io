@@ -65,7 +65,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ptcx.github.io/" />
 
-<meta property="og:updated_time" content="2019-11-20T19:40:22+08:00" />
+<meta property="og:updated_time" content="2019-12-07T21:41:41+08:00" />
 <meta itemprop="name" content="ptcx&#39;s blog">
 <meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
@@ -282,6 +282,40 @@
   <header class="post-header">
     <h1 class="post-title">
       
+      <a class="post-link" href="/post/load_avg/">理解平均负载</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2019-12-07" class="post-time">
+        2019-12-07
+      </time>
+      <div class="post-category">
+          <a href="https://ptcx.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
+          
+        </div>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载： 1 2 3 4 5 6 $ uptime 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 $ top top - 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 ... uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三
+    </div>
+    <div class="read-more">
+      <a href="/post/load_avg/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
       <a class="post-link" href="/post/gc_copying/">GC复制算法</a>
     </h1>
     
@@ -408,40 +442,6 @@
     </div>
     <div class="read-more">
       <a href="/post/gc_mark_sweep/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/gc_intro/">GC算法简介</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2019-11-14" class="post-time">
-        2019-11-14
-      </time>
-      <div class="post-category">
-          <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"> 后端技术 </a>
-          
-        </div>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      GC定义 GC是Garbage Collection的简称，也就是我们常说的垃圾回收。GC把程序已分配但是不再使用的内存空间视为垃圾。GC程序主要做两件事： 找到内存空间里的垃圾 回收这部分内存，以供程序员后续能再次使用 对于没有GC的语言，程序员就必须手动管理内存，如果忘记释放内存空间，就容易发生内存泄露，
-    </div>
-    <div class="read-more">
-      <a href="/post/gc_intro/" class="read-more-link">Read more</a>
     </div>
     
   </div>

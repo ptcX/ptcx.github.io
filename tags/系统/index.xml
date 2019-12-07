@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>系统 on ptcx&#39;s blog</title>
+    <link>https://ptcx.github.io/tags/%E7%B3%BB%E7%BB%9F/</link>
+    <description>Recent content in 系统 on ptcx&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>ptcx</copyright>
+    <lastBuildDate>Sat, 07 Dec 2019 21:41:41 +0800</lastBuildDate>
+    
+	<atom:link href="https://ptcx.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>理解平均负载</title>
+      <link>https://ptcx.github.io/post/load_avg/</link>
+      <pubDate>Sat, 07 Dec 2019 21:41:41 +0800</pubDate>
+      
+      <guid>https://ptcx.github.io/post/load_avg/</guid>
+      <description>一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载： 1 2 3 4 5 6 $ uptime 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 $ top top - 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 ... uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三</description>
+    </item>
+    
+  </channel>
+</rss>

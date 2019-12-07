@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Categories - ptcx&#39;s blog</title>
+  <title>理解平均负载 - ptcx&#39;s blog</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -23,7 +23,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="ptcx" />
-  <meta name="description" content="ptcx的个人博客，记录、学习、分享" />
+  <meta name="description" content="一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载： 1 2 3 4 5 6 $ uptime 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 $ top top - 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 ... uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三" />
+
   <meta name="keywords" content="blog, 技术, IT, 后端技术, 前端技术, web开发, golang" />
 
 
@@ -34,8 +35,8 @@
 <meta name="generator" content="Hugo 0.59.1" />
 
 
-<link rel="canonical" href="https://ptcx.github.io/categories/" />
-<link href="/categories/index.xml" rel="alternate" type="application/rss+xml" title="ptcx&#39;s blog" />
+<link rel="canonical" href="https://ptcx.github.io/post/load_avg/" />
+
 
 
 
@@ -60,18 +61,26 @@
 <link rel="stylesheet" href="/css/images.css">
 
 
-<meta property="og:title" content="Categories" />
-<meta property="og:description" content="ptcx的个人博客，记录、学习、分享" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://ptcx.github.io/categories/" />
+<meta property="og:title" content="理解平均负载" />
+<meta property="og:description" content="一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载： 1 2 3 4 5 6 $ uptime 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 $ top top - 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 ... uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ptcx.github.io/post/load_avg/" />
+<meta property="article:published_time" content="2019-12-07T21:41:41+08:00" />
+<meta property="article:modified_time" content="2019-12-07T21:41:41+08:00" />
+<meta itemprop="name" content="理解平均负载">
+<meta itemprop="description" content="一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载： 1 2 3 4 5 6 $ uptime 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 $ top top - 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 ... uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三">
 
-<meta property="og:updated_time" content="2019-12-07T21:41:41+08:00" />
-<meta itemprop="name" content="Categories">
-<meta itemprop="description" content="ptcx的个人博客，记录、学习、分享">
 
+<meta itemprop="datePublished" content="2019-12-07T21:41:41&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-07T21:41:41&#43;08:00" />
+<meta itemprop="wordCount" content="1202">
+
+
+
+<meta itemprop="keywords" content="优化,系统," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Categories"/>
-<meta name="twitter:description" content="ptcx的个人博客，记录、学习、分享"/>
+<meta name="twitter:title" content="理解平均负载"/>
+<meta name="twitter:description" content="一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载： 1 2 3 4 5 6 $ uptime 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 $ top top - 21:13:31 up 23 min, 1 users, load average: 0.52, 0.58, 0.59 ... uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -223,7 +232,7 @@
 
       </li>
     
-        <li class="menu-item active">
+        <li class="menu-item">
         
           
           
@@ -270,209 +279,200 @@
     <main id="main" class="main bg-llight">
       <div class="content-wrapper">
         <div id="content" class="content container">
-          
-  
-  
-  
-  
-
-  
-  
+          <article class="post bg-white">
     
-    
-    
-    
-      <section id="archive" class="archive">
-        <div class="archive-title">
-        </div>
-          <div class="collection-title">
-            <h2 class="archive-year">
-              <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/">
-                Category: 后端技术
-              </a>
-            </h2>
+    <header class="post-header">
+      <h1 class="post-title">理解平均负载</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-12-07" class="post-time">
+          2019-12-07
+        </time>
+        <div class="post-category">
+            <a href="https://ptcx.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
+            
           </div>
+        
 
-          
-            <div class="archive-post">
-              <time datetime="2019-11-20" class="archive-post-time">
-                2019-11-20
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/gc_copying/" class="archive-post-link">
-                  GC复制算法
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2019-11-18" class="archive-post-time">
-                2019-11-18
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/gc_partial/" class="archive-post-link">
-                  GC部分标记-清除法
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2019-11-16" class="archive-post-time">
-                2019-11-16
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/gc_rc/" class="archive-post-link">
-                  GC引用计数法
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2019-11-14" class="archive-post-time">
-                2019-11-14
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/gc_mark_sweep/" class="archive-post-link">
-                  GC标记-清除算法
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2019-11-14" class="archive-post-time">
-                2019-11-14
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/gc_intro/" class="archive-post-link">
-                  GC算法简介
-                </a>
-              </span>
-            </div>
-          
-          
-            <div class="more-post">
-              <a href="https://ptcx.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/" class="more-post-link">More Post &gt;&gt;&gt;</a>
-            </div>
-          
-      </section>
+        
+        
+
+        
+        
+      </div>
+    </header>
+
     
     
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">What's On This Page</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#含义">含义</a></li>
+<li><a href="#如何分析">如何分析</a></li>
+<li><a href="#和cpu使用率关系">和CPU使用率关系</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>一般我们排查系统变慢的问题时候，会执行uptime或者top命令，来查看操作系统的负载：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ uptime
+21:13:31 up 23 min,  1 users,  load average: 0.52, 0.58, 0.59
+
+$ top
+top - 21:13:31 up 23 min,  1 users,  load average: 0.52, 0.58, 0.59
+...</pre></td></tr></table>
+</div>
+</div>
+<p>uptime和top命令的第一行输出都是一样的，分别是系统当前时间、系统已经运行的时间、当前登录用户数以及系统平均负载。而系统平均负载又分为三个数值，分别表示系统过去1分钟、5分钟、15分钟的平均负载。</p>
+
+<h1 id="含义">含义</h1>
+
+<p>那么平均负载到底代表什么呢？我们使用<code>man uptime</code>命令查看一下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">System load averages is the average number of processes that are either in a runnable or uninterruptable state.  A  process  in  a
+runnable  state  is  either  using  the CPU or waiting to use the CPU.  A process in uninterruptable state is waiting for some I/O
+access, eg waiting for disk.  The averages are taken over the three time intervals.  Load averages are not normalized for the num‐
+ber  of CPUs in a system, so a load average of 1 means a single CPU system is loaded all the time while on a 4 CPU system it means
+it was idle 75% of the time.</pre></td></tr></table>
+</div>
+</div>
+<p>官方解释指出，系统平均负载就是单位时间内系统中处于runnable和uninterruptable状态的平均进程数。</p>
+
+<ul>
+<li><p>runnable状态</p>
+
+<p>可运行状态，指这个进程正在使用cpu或者在等待cpu，我们使用ps命令看到的处于R状态的进程。</p></li>
+
+<li><p>uninterruptable状态</p>
+
+<p>不可中断状态，指这个进程正处于内核态关键流程，不可被中断，最常见的就是处于等待I/O状态，我们使用ps命令看到的处于D状态的进程。</p></li>
+</ul>
+
+<p>为了便于系统快速计算，实际上平均负载是活跃进程数的指数衰减平均值，我们可以简单理解为，平均负载其实就是平均活跃进程数。系统平均负载并没有对系统的cpu个数进行归一化，所以和CPU使用率并没有直接关系。</p>
+
+<p>如果系统平均负载是2，意味着：</p>
+
+<ul>
+<li><p>在1个cpu的系统中，有一半的进程竞争不到cpu</p></li>
+
+<li><p>在2个cpu的系统中，所有的cpu刚好被占用</p></li>
+
+<li><p>在4个cpu的系统中，cpu有50%的空闲</p></li>
+</ul>
+
+<h1 id="如何分析">如何分析</h1>
+
+<p>所以，我们不能光凭系统平均负载就来判断系统的是否负载过高或者过低。首先我们需要知道有几个cpu：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ grep &#39;model name&#39; /proc/cpuinfo | wc -l</pre></td></tr></table>
+</div>
+</div>
+<p>平均负载最理想的情况就是正好等于CPU个数，当平均负载比CPU个数大时，系统就出现了过载。之后，我们就可以通过分析1分钟、5分钟、15分钟的平均负载，来了解当前系统的负载变化趋势。</p>
+
+<p>使用平均负载超过或者低于CPU数量多少作为依据，来判断系统平均负载是否正常，参考价值不大。最好的方法是监控正常状态下的系统平均负载，根据历史数据来判断当前负载是否正常，如果不正常，再通过其他相关的分析程序来分析原因。</p>
+
+<h1 id="和cpu使用率关系">和CPU使用率关系</h1>
+
+<p>系统平均负载和CPU使用率没有直接的关系，系统平均负载不仅包括了正在使用CPU的程序，还包括了等待CPU和等待I/O的程序。而CPU使用率是单位时间内CPU繁忙状况的统计，对于不同类型的程序，和平均负载的不一定完全对应：</p>
+
+<ul>
+<li><p>CPU密集型</p>
+
+<p>CPU大量时间都在运行，一般平均负载会升高，CPU使用率也会升高</p></li>
+
+<li><p>I/O密集型</p>
+
+<p>大量等待I/O也会导致平均负载升高，但是CPU使用率不一定高</p></li>
+</ul>
+
+<p>此外，如果有大量等待CPU调度的进程，也会导致平均负载升高，同时CPU使用率也会升高。</p>
+
+    </div>
+
     
     
+
+
     
-      <section id="archive" class="archive">
-        <div class="archive-title">
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://ptcx.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+          <a href="https://ptcx.github.io/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
         </div>
-          <div class="collection-title">
-            <h2 class="archive-year">
-              <a href="https://ptcx.github.io/categories/web%E6%8A%80%E6%9C%AF/">
-                Category: web技术
-              </a>
-            </h2>
-          </div>
 
-          
-            <div class="archive-post">
-              <time datetime="2019-11-12" class="archive-post-time">
-                2019-11-12
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/oauth2_code/" class="archive-post-link">
-                  OAuth2.0授权码模式
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2019-11-11" class="archive-post-time">
-                2019-11-11
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/tcp_status/" class="archive-post-link">
-                  TCP连接状态
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2019-11-11" class="archive-post-time">
-                2019-11-11
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/https_what/" class="archive-post-link">
-                  HTTPS原理
-                </a>
-              </span>
-            </div>
-          
-          
-      </section>
-    
-    
-    
-    
-    
-      <section id="archive" class="archive">
-        <div class="archive-title">
-        </div>
-          <div class="collection-title">
-            <h2 class="archive-year">
-              <a href="https://ptcx.github.io/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/">
-                Category: 常用工具
-              </a>
-            </h2>
-          </div>
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/gc_copying/">
+            <span class="next-text nav-default">GC复制算法</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
 
-          
-            <div class="archive-post">
-              <time datetime="2019-11-10" class="archive-post-time">
-                2019-11-10
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/git_cmd/" class="archive-post-link">
-                  常用GIT命令
-                </a>
-              </span>
-            </div>
-          
-          
-      </section>
-    
-    
-    
-    
-    
-      <section id="archive" class="archive">
-        <div class="archive-title">
-        </div>
-          <div class="collection-title">
-            <h2 class="archive-year">
-              <a href="https://ptcx.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
-                Category: 操作系统
-              </a>
-            </h2>
-          </div>
-
-          
-            <div class="archive-post">
-              <time datetime="2019-12-07" class="archive-post-time">
-                2019-12-07
-              </time>
-              <span class="archive-post-title">
-                <a href="/post/load_avg/" class="archive-post-link">
-                  理解平均负载
-                </a>
-              </span>
-            </div>
-          
-          
-      </section>
-    
-    
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
 
   
   
 
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
 
         </div>
       </div>
